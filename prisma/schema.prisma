@@ -1,0 +1,53 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RequestStatus {
+  NEW
+  CONTACTED
+  CONFIRMED
+  CANCELLED
+}
+
+model PassengerRequest {
+  id            String        @id @default(cuid())
+  fullName      String
+  email         String
+  phone         String
+  nationality   String?
+  passportNo    String?
+  passengers    Int           @default(1)
+  specialReqs   String?
+  flightJson    Json          // snapshot of the selected flight
+  status        RequestStatus @default(NEW)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model FlightSearchHistory {
+  id          String    @id @default(cuid())
+  origin      String
+  destination String
+  departDate  DateTime
+  returnDate  DateTime?
+  cabin       String
+  adults      Int
+  children    Int
+  createdAt   DateTime  @default(now())
+}
