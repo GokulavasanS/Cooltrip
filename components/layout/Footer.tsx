@@ -51,10 +51,14 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-white mb-4">Services</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>Flight Search</li>
+              <li>
+                <Link href={ROUTES.flights} className="hover:text-white transition-colors">Flight Search</Link>
+              </li>
               <li>Group Bookings</li>
               <li>Travel Insurance</li>
-              <li>Visa Assistance</li>
+              <li>
+                <Link href={ROUTES.visa} className="hover:text-white transition-colors">Visa Assistance</Link>
+              </li>
               <li>24/7 Support</li>
             </ul>
           </div>

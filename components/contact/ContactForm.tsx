@@ -62,9 +62,9 @@ export default function ContactForm() {
 
         <div>
           <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Mobile Number</label>
-          <div className="flex gap-2">
-            <span className="input-glass w-16 text-center text-gray-600 font-medium shrink-0">+91</span>
-            <input {...register("phone")} type="tel" className="input-glass flex-1" placeholder="9876543210" maxLength={10} />
+          <div className="flex gap-2 items-center min-w-0">
+            <span className="input-glass shrink-0 text-center text-gray-600 font-medium text-sm px-3 py-3" style={{ width: "60px" }}>+91</span>
+            <input {...register("phone")} type="tel" className="input-glass flex-1 min-w-0" placeholder="9876543210" maxLength={10} />
           </div>
           {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
         </div>

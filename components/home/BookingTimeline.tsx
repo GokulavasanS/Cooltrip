@@ -14,7 +14,7 @@ const steps = [
 
 export default function BookingTimeline() {
   return (
-    <section className="py-24 gradient-section">
+    <section id="how-it-works" className="py-24 gradient-section">
       <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
         <motion.div

@@ -37,6 +37,51 @@ export default function Hero() {
             animate="visible"
             className="z-10"
           >
+            {/* ── SVG Flight Path ── */}
+            <motion.div
+              variants={fadeUp}
+              className="relative mb-4 h-[80px] w-full max-w-[420px] -ml-1"
+            >
+              <svg
+                viewBox="0 0 420 80"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full"
+                aria-hidden="true"
+              >
+                {/* Main S-curved dashed path matching the reference */}
+                <path
+                  id="flightPath"
+                  d="M 15 65 C 60 65, 80 20, 120 25 C 155 30, 155 55, 185 45 C 215 35, 215 10, 255 15 C 295 20, 310 55, 355 48 C 385 43, 400 35, 415 30"
+                  stroke="#4F8CFF"
+                  strokeWidth="1.6"
+                  strokeDasharray="5 5"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.5"
+                />
+
+                {/* Small static plane at the left start */}
+                <g transform="translate(8,58) rotate(-15)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#4F8CFF" opacity="0.6" />
+                  </svg>
+                </g>
+
+                {/* Animated plane travelling along the path */}
+                <g>
+                  <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#flightPath" />
+                  </animateMotion>
+                  <g transform="translate(-10,-10)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#4F8CFF" />
+                    </svg>
+                  </g>
+                </g>
+              </svg>
+            </motion.div>
+
             {/* Badge */}
             <motion.div
               variants={fadeUp}

@@ -4,7 +4,6 @@ import WhyChooseUs from "@/components/home/WhyChooseUs";
 import PopularDestinations from "@/components/home/PopularDestinations";
 import BookingTimeline from "@/components/home/BookingTimeline";
 import Testimonials from "@/components/home/Testimonials";
-import Statistics from "@/components/home/Statistics";
 import FAQ from "@/components/home/FAQ";
 import CTABanner from "@/components/home/CTABanner";
 
@@ -20,7 +19,6 @@ export default function HomePage() {
       <WhyChooseUs />
       <PopularDestinations />
       <BookingTimeline />
-      <Statistics />
       <Testimonials />
       <FAQ />
       <CTABanner />

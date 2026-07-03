@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,19 +14,24 @@ import { submitPassengerRequest } from "@/services/api/passenger";
 import { formatINR } from "@/utils/currency";
 import { formatDate } from "@/utils/date";
 import { formatDuration, stopsLabel } from "@/utils/time";
-import { buildWhatsAppURL } from "@/utils/whatsapp";
 import { COUNTRIES } from "@/constants/countries";
 import { slideInRight } from "@/utils/animation";
+
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_BOOKING!;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
 export default function PassengerModal() {
   const { selectedFlight, setSelectedFlight } = useFlightStore();
   const { isPassengerModalOpen, closePassengerModal } = useUIStore();
   const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<PassengerSchema>({
     resolver: zodResolver(passengerSchema),
@@ -34,18 +40,44 @@ export default function PassengerModal() {
 
   const onSubmit = async (data: PassengerSchema) => {
     if (!selectedFlight) return;
-    await submitPassengerRequest(data, selectedFlight);
-    setSubmitted(true);
-    // Open WhatsApp after a short delay so user sees the success animation first
-    setTimeout(() => {
-      window.open(buildWhatsAppURL(selectedFlight, data), "_blank");
-    }, 1800);
+    setEmailError("");
+
+    try {
+      await submitPassengerRequest(data, selectedFlight);
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          full_name: data.fullName,
+          email: data.email,
+          phone: `+91 ${data.phone}`,
+          nationality: data.nationality,
+          passport_no: data.passportNo ?? "Not provided",
+          passengers: data.passengers,
+          special_requests: data.specialRequests ?? "None",
+          flight_route: `${selectedFlight.originCode} → ${selectedFlight.destinationCode}`,
+          flight_date: formatDate(selectedFlight.departureDate),
+          departure_time: selectedFlight.departureTime,
+          arrival_time: selectedFlight.arrivalTime,
+          airline: `${selectedFlight.airline} (${selectedFlight.flightNumber})`,
+          cabin: selectedFlight.cabin,
+          fare: formatINR(selectedFlight.fare),
+          to_email: "Reservation@cooltrip.org",
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitted(true);
+    } catch {
+      setEmailError("Failed to send your request. Please try again.");
+    }
   };
 
   const handleClose = () => {
     closePassengerModal();
     setSelectedFlight(null);
-    setTimeout(() => { reset(); setSubmitted(false); }, 400);
+    setTimeout(() => { reset(); setSubmitted(false); setEmailError(""); }, 400);
   };
 
   if (!isPassengerModalOpen || !selectedFlight) return null;
@@ -100,11 +132,13 @@ export default function PassengerModal() {
 
                   <Field label="Mobile Number" error={errors.phone?.message}>
                     <div className="flex gap-2 items-center">
-                      <span className="input-glass w-16 text-center text-gray-600 font-medium shrink-0">+91</span>
+                      <span className="input-glass shrink-0 text-center text-gray-600 font-medium text-sm px-3 py-3" style={{ width: "64px" }}>
+                        +91
+                      </span>
                       <input
                         {...register("phone")}
                         type="tel"
-                        className="input-glass flex-1"
+                        className="input-glass flex-1 min-w-0"
                         placeholder="9876543210"
                         maxLength={10}
                       />
@@ -145,12 +179,16 @@ export default function PassengerModal() {
                       id="terms"
                       className="mt-0.5 accent-[#4F8CFF]"
                     />
-                    <label htmlFor="terms" className="text-sm text-gray-600 leading-relaxed">
-                      I agree to the <span className="text-[#4F8CFF] cursor-pointer">Terms & Conditions</span>. I understand that CoolTrips will contact me via WhatsApp to complete this booking.
+                    <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      I agree to the <span className="text-[#4F8CFF] cursor-pointer">Terms &amp; Conditions</span>. I understand that CoolTrips will contact me via email to complete this booking.
                     </label>
                   </div>
                   {errors.agreeToTerms && (
                     <p className="text-red-500 text-xs">{errors.agreeToTerms.message}</p>
+                  )}
+
+                  {emailError && (
+                    <p className="text-red-500 text-sm font-medium">{emailError}</p>
                   )}
 
                   <button
@@ -158,7 +196,7 @@ export default function PassengerModal() {
                     disabled={isSubmitting}
                     className="btn-primary w-full py-3.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? "Submitting..." : "Submit Request via WhatsApp"}
+                    {isSubmitting ? "Sending..." : "Submit Booking Request"}
                   </button>
                 </form>
               </>
@@ -221,11 +259,11 @@ function SuccessView({ onClose }: { onClose: () => void }) {
       <div className="success-icon w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
         <CheckCircle className="w-10 h-10 text-white" />
       </div>
-      <h3 className="font-bold text-gray-900 text-2xl mb-3">Request Submitted!</h3>
-      <p className="text-gray-500 leading-relaxed mb-2">
-        Thank you for choosing CoolTrips. Opening WhatsApp to connect with our travel team...
+      <h3 className="font-bold text-gray-900 text-2xl mb-3">Request Sent!</h3>
+      <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-2">
+        Thank you! We have received your details. Our team will contact you shortly.
       </p>
-      <p className="text-gray-400 text-sm mb-8">Our expert will confirm your booking within 30 minutes.</p>
+      <p className="text-gray-400 dark:text-gray-500 text-sm mb-8">Our team will respond within 24 hours.</p>
       <button onClick={onClose} className="btn-secondary px-8 py-3">
         Close
       </button>

@@ -186,10 +186,10 @@ export default function SearchPanel() {
           <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
             Adults
           </label>
-          <div className="relative">
-            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4F8CFF]" />
+          <div className="relative flex items-center">
+            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4F8CFF] pointer-events-none z-10" />
             <select
-              className="input-glass pl-9 appearance-none"
+              className="input-glass pl-9 appearance-none w-full"
               value={adults}
               onChange={(e) => setAdults(Number(e.target.value))}
             >

@@ -9,18 +9,18 @@ import { ROUTES } from "@/constants/routes";
 import { formatINR } from "@/utils/currency";
 
 const destinations = [
-  { name: "Dubai", country: "UAE", code: "DXB", img: "/dest-dubai.png", from: 18500 },
-  { name: "Singapore", country: "Singapore", code: "SIN", img: "/dest-singapore.png", from: 14200 },
-  { name: "Bali", country: "Indonesia", code: "DPS", img: "/dest-bali.png", from: 12800 },
-  { name: "London", country: "United Kingdom", code: "LHR", img: "/dest-london.png", from: 42000 },
-  { name: "Paris", country: "France", code: "CDG", img: "/dest-paris.png", from: 38500 },
-  { name: "Tokyo", country: "Japan", code: "NRT", img: "/dest-tokyo.png", from: 36000 },
-  { name: "Maldives", country: "Maldives", code: "MLE", img: "/dest-maldives.png", from: 9800 },
+  { name: "Dubai", country: "UAE", code: "DXB", img: "/dest-dubai.png", from: 18500, tag: "Most Popular" },
+  { name: "Singapore", country: "Singapore", code: "SIN", img: "/dest-singapore.png", from: 14200, tag: "Best Value" },
+  { name: "Bali", country: "Indonesia", code: "DPS", img: "/dest-bali.png", from: 12800, tag: "Trending" },
+  { name: "London", country: "United Kingdom", code: "LHR", img: "/dest-london.png", from: 42000, tag: "Europe" },
+  { name: "Paris", country: "France", code: "CDG", img: "/dest-paris.png", from: 38500, tag: "Romance" },
+  { name: "Tokyo", country: "Japan", code: "NRT", img: "/dest-tokyo.png", from: 36000, tag: "Asia" },
+  { name: "Maldives", country: "Maldives", code: "MLE", img: "/dest-maldives.png", from: 9800, tag: "Beach" },
 ];
 
 export default function PopularDestinations() {
   return (
-    <section className="py-24 bg-white">
+    <section id="destinations" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -45,65 +45,102 @@ export default function PopularDestinations() {
           </motion.div>
         </motion.div>
 
-        {/* Destination cards */}
+        {/* ── Bento Grid ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-2 md:grid-cols-4 grid-rows-[auto] gap-4"
         >
-          {/* Large featured card */}
-          <motion.div variants={fadeUp} className="sm:col-span-2 row-span-2">
-            <DestCard d={destinations[0]} large />
+          {/* [1] Hero card — Dubai — spans 2 cols × 2 rows */}
+          <motion.div variants={fadeUp} className="col-span-2 row-span-2">
+            <BentoCard d={destinations[0]} className="h-[420px]" />
           </motion.div>
-          {/* Regular cards */}
-          {destinations.slice(1, 4).map((d) => (
-            <motion.div key={d.code} variants={fadeUp}>
-              <DestCard d={d} />
-            </motion.div>
-          ))}
-          {/* Wide card */}
-          <motion.div variants={fadeUp} className="sm:col-span-2">
-            <DestCard d={destinations[4]} wide />
+
+          {/* [2] Singapore — tall right */}
+          <motion.div variants={fadeUp} className="col-span-1 row-span-1">
+            <BentoCard d={destinations[1]} className="h-[200px]" />
           </motion.div>
-          {destinations.slice(5).map((d) => (
-            <motion.div key={d.code} variants={fadeUp}>
-              <DestCard d={d} />
-            </motion.div>
-          ))}
+
+          {/* [3] Bali — tall right */}
+          <motion.div variants={fadeUp} className="col-span-1 row-span-1">
+            <BentoCard d={destinations[2]} className="h-[200px]" />
+          </motion.div>
+
+          {/* [4] London — wide bottom-right (spans 2 cols) */}
+          <motion.div variants={fadeUp} className="col-span-2 row-span-1">
+            <BentoCard d={destinations[3]} className="h-[200px]" wide />
+          </motion.div>
+
+          {/* [5] Paris — narrow */}
+          <motion.div variants={fadeUp} className="col-span-1 row-span-1">
+            <BentoCard d={destinations[4]} className="h-[200px]" />
+          </motion.div>
+
+          {/* [6] Tokyo — narrow */}
+          <motion.div variants={fadeUp} className="col-span-1 row-span-1">
+            <BentoCard d={destinations[5]} className="h-[200px]" />
+          </motion.div>
+
+          {/* [7] Maldives — spans 2 cols wide */}
+          <motion.div variants={fadeUp} className="col-span-2 row-span-1">
+            <BentoCard d={destinations[6]} className="h-[200px]" wide />
+          </motion.div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function DestCard({ d, large, wide }: { d: typeof destinations[0]; large?: boolean; wide?: boolean }) {
+function BentoCard({
+  d,
+  className = "",
+  wide = false,
+}: {
+  d: (typeof destinations)[0];
+  className?: string;
+  wide?: boolean;
+}) {
   return (
-    <Link href={ROUTES.flights} className="block group">
-      <div className={`relative overflow-hidden rounded-3xl ${large ? "h-[420px]" : wide ? "h-48" : "h-52"} hover-lift`}>
+    <Link href={ROUTES.flights} className="block group h-full">
+      <div className={`relative overflow-hidden rounded-3xl w-full hover-lift ${className}`}>
         <Image
           src={d.img}
           alt={d.name}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-        {/* Content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+
+        {/* Tag badge */}
+        {d.tag && (
+          <div className="absolute top-4 left-4">
+            <span className="px-2.5 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-full border border-white/30">
+              {d.tag}
+            </span>
+          </div>
+        )}
+
+        {/* Bottom content */}
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <div className="flex items-end justify-between">
-            <div>
+          <div className="flex items-end justify-between gap-2">
+            <div className="min-w-0">
               <div className="flex items-center gap-1.5 text-white/80 text-xs mb-1">
-                <MapPin className="w-3 h-3" />
-                {d.country}
+                <MapPin className="w-3 h-3 shrink-0" />
+                <span className="truncate">{d.country}</span>
               </div>
-              <h3 className="text-white font-bold text-xl">{d.name}</h3>
+              <h3 className={`text-white font-bold leading-tight ${wide ? "text-2xl" : "text-xl"}`}>
+                {d.name}
+              </h3>
             </div>
-            <div className="text-right">
-              <div className="text-white/70 text-xs">From</div>
-              <div className="text-white font-bold text-base">{formatINR(d.from)}</div>
+            <div className="text-right shrink-0">
+              <div className="text-white/70 text-[10px] uppercase tracking-wider">From</div>
+              <div className={`text-white font-bold ${wide ? "text-lg" : "text-base"}`}>
+                {formatINR(d.from)}
+              </div>
             </div>
           </div>
         </div>
