@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MapPin, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Airport } from "@/types/airport";
 import { useAirportSearch } from "@/hooks/useAirportSearch";
 
@@ -60,11 +60,10 @@ export default function AirportAutocomplete({ id, label, placeholder, value, onC
         {label}
       </label>
       <div className="relative flex items-center">
-        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4F8CFF] pointer-events-none z-10" />
         <input
           id={id}
           type="text"
-          className="input-glass pl-9 pr-8 w-full"
+          className="input-glass pr-8 w-full"
           placeholder={placeholder}
           value={query}
           onChange={(e) => handleInput(e.target.value)}

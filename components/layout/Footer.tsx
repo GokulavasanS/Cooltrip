@@ -69,15 +69,18 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 text-[#4F8CFF] shrink-0" />
-                <span>Anna Nagar, Chennai, Tamil Nadu 600040</span>
+                <span>24/53, Gopalapuram, 2nd Street,
+Thiru.Vi.Ka Nagar, Perambur,
+Chennai, Tamil Nadu — 600082</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#4F8CFF] shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-white transition-colors">+91 98765 43210</a>
+                <a href="tel:+919876543210" className="hover:text-white transition-colors">+91 99400 33117</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#4F8CFF] shrink-0" />
-                <a href="mailto:hello@cooltrips.in" className="hover:text-white transition-colors">hello@cooltrips.in</a>
+                <a href="mailto:hello@cooltrips.in" className="hover:text-white transition-colors">
+reservation@cooltrip.org</a>
               </li>
             </ul>
           </div>

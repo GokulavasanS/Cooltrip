@@ -91,9 +91,6 @@ export default function HeroSearchForm() {
             {t.label}
           </button>
         ))}
-        <button className="flex-1 py-2 rounded-lg text-sm font-semibold text-gray-400 cursor-not-allowed">
-          Multi City
-        </button>
       </div>
 
       {/* Origin / Destination with swap */}
