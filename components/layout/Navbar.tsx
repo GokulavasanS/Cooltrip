@@ -39,14 +39,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href={ROUTES.home} className="flex items-center group">
-          <div className="bg-white px-3 py-1.5 rounded-xl border border-gray-200/50 shadow-sm flex items-center justify-center transition-all duration-300 group-hover:scale-[1.03]">
-            <img
-              src="/logo.png"
-              alt="CoolTrips Logo"
-              className="h-6 w-auto object-contain"
-            />
-          </div>
+        <Link href={ROUTES.home} className="flex items-center group transition-transform duration-300 hover:scale-[1.02]">
+          <img
+            src="/logo.png"
+            alt="CoolTrips Logo"
+            className="h-8 md:h-9 w-auto object-contain dark:invert"
+          />
         </Link>
 
         {/* Desktop nav */}
