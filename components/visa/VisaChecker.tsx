@@ -22,9 +22,9 @@ import {
 import { COUNTRIES } from "@/constants/countries";
 import { fadeUp, staggerContainer } from "@/utils/animation";
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_VISA!;
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_VISA ?? "";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 const purposes = [
   { value: "tourist", label: "Tourist" },
@@ -169,6 +169,13 @@ export default function VisaChecker() {
   const sendEmail = async (visaStatus: string, visaNote: string) => {
     setSubmitting(true);
     setEmailError("");
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setEmailError("Email service is not configured. Please contact us directly at reservation@cooltrip.org.");
+      setSubmitting(false);
+      return;
+    }
+
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -189,8 +196,9 @@ export default function VisaChecker() {
         EMAILJS_PUBLIC_KEY
       );
       setEmailSent(true);
-    } catch {
-      setEmailError("Failed to send enquiry. Please try again or contact us directly.");
+    } catch (err) {
+      console.error("[EmailJS] Visa send error:", err);
+      setEmailError("Failed to send enquiry. Please try again or email us at reservation@cooltrip.org.");
     } finally {
       setSubmitting(false);
     }

@@ -17,9 +17,9 @@ import { formatDuration, stopsLabel } from "@/utils/time";
 import { COUNTRIES } from "@/constants/countries";
 import { slideInRight } from "@/utils/animation";
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_BOOKING!;
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_BOOKING ?? "";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 export default function PassengerModal() {
   const { selectedFlight, setSelectedFlight } = useFlightStore();
@@ -41,6 +41,11 @@ export default function PassengerModal() {
   const onSubmit = async (data: PassengerSchema) => {
     if (!selectedFlight) return;
     setEmailError("");
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setEmailError("Email service is not configured. Please contact us at reservation@cooltrip.org.");
+      return;
+    }
 
     try {
       await submitPassengerRequest(data, selectedFlight);
@@ -69,8 +74,9 @@ export default function PassengerModal() {
       );
 
       setSubmitted(true);
-    } catch {
-      setEmailError("Failed to send your request. Please try again.");
+    } catch (err) {
+      console.error("[EmailJS] Booking send error:", err);
+      setEmailError("Failed to send your request. Please try again or contact us at reservation@cooltrip.org.");
     }
   };
 
