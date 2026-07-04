@@ -14,7 +14,7 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt="CoolTrips Logo"
-                className="h-8 w-auto object-contain invert brightness-200"
+                className="h-8 w-auto object-contain"
               />
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-6">
@@ -80,8 +80,10 @@ Chennai, Tamil Nadu — 600082</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#4F8CFF] shrink-0" />
-                <a href="mailto:hello@cooltrips.in" className="hover:text-white transition-colors">
-reservation@cooltrip.org</a>
+                <a href="mailto:reservation@cooltrip.org" className="hover:text-white transition-colors">
+reservation@cooltrip.org,</a>
+ <a href="mailto:visa@cooltrip.org" className="hover:text-white transition-colors">
+visa@cooltrip.org</a>
               </li>
             </ul>
           </div>

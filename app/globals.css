@@ -3,13 +3,12 @@
 
 /* ── Tailwind v4 theme config ── */
 @theme {
-  --color-accent: #4F8CFF;
+  --color-accent: #FC990A; /*font color accent : #4F8CFF*/
   --color-cyan: #62D4E3;
   --font-sans: "Inter", sans-serif;
   --radius-2xl: 20px;
   --radius-3xl: 30px;
 }
-
 /* ── Design Tokens ── */
 :root {
   --accent: #4F8CFF;

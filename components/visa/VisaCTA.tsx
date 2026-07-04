@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { fadeUp } from "@/utils/animation";
 
-const COMPANY_EMAIL = "hello@cooltrips.in";
+const COMPANY_EMAIL = "reservation@cooltrip.org | visa@cooltrip.org";
 
 export default function VisaCTA() {
   const handleEmail = () => {

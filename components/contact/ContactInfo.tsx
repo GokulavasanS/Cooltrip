@@ -63,6 +63,9 @@ export default function ContactInfo() {
             <a href="mailto:cooltripconsultant@gmail.com" className="block text-[#4F8CFF] text-sm hover:underline break-all">
               cooltripconsultant@gmail.com
             </a>
+            <a href="mailto:visa@cooltrip.org" className="block text-[#4F8CFF] text-sm hover:underline break-all">
+              visa@cooltrip.org
+            </a>
           </div>
         </div>
       </div>
