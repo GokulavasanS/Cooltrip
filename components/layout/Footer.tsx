@@ -10,11 +10,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#4F8CFF] to-[#62D4E3] flex items-center justify-center">
-                <Plane className="w-4 h-4 text-white" />
+            <div className="flex items-center mb-4">
+              <div className="bg-white px-3 py-1.5 rounded-xl border border-white/10 shadow-sm flex items-center justify-center">
+                <img
+                  src="/logo.png"
+                  alt="CoolTrips Logo"
+                  className="h-6 w-auto object-contain"
+                />
               </div>
-              <span className="font-bold text-xl text-white">CoolTrips</span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-6">
               Your trusted travel partner. We search, compare, and personally book your perfect flight.
