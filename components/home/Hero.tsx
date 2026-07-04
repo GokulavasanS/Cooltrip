@@ -39,48 +39,80 @@ export default function Hero() {
           >
             {/* ── SVG Flight Path ── */}
             <motion.div
-              variants={fadeUp}
-              className="relative mb-4 h-[80px] w-full max-w-[420px] -ml-1"
-            >
-              <svg
-                viewBox="0 0 420 80"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-                aria-hidden="true"
-              >
-                {/* Main S-curved dashed path matching the reference */}
-                <path
-                  id="flightPath"
-                  d="M 15 65 C 60 65, 80 20, 120 25 C 155 30, 155 55, 185 45 C 215 35, 215 10, 255 15 C 295 20, 310 55, 355 48 C 385 43, 400 35, 415 30"
-                  stroke="#4F8CFF"
-                  strokeWidth="1.6"
-                  strokeDasharray="5 5"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.5"
-                />
+  variants={fadeUp}
+  className="relative h-[125px] w-full max-w-[520px] mb-4 -ml-2 pointer-events-none select-none"
+>
+  <svg
+    viewBox="0 0 620 125"
+    className="w-full h-full overflow-visible"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <filter id="planeShadow">
+        <feDropShadow
+          dx="0"
+          dy="3"
+          stdDeviation="4"
+          floodOpacity="0.18"
+        />
+      </filter>
+    </defs>
 
-                {/* Small static plane at the left start */}
-                <g transform="translate(8,58) rotate(-15)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#4F8CFF" opacity="0.6" />
-                  </svg>
-                </g>
+    {/* Flight Path */}
+    <path
+      id="flightPath"
+      d="
+      M15 78
+      C55 55 95 55 135 74
+      S215 104 255 74
+      S335 44 385 72
+      C425 95 450 40 470 18
+      C490 5 525 18 510 45
+      C495 70 455 60 470 25
+      C485 -10 545 40 600 24
+      "
+      fill="none"
+      stroke="#4F8CFF"
+      strokeWidth="2"
+      strokeDasharray="6 10"
+      strokeLinecap="round"
+      opacity=".75"
+    />
 
-                {/* Animated plane travelling along the path */}
-                <g>
-                  <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#flightPath" />
-                  </animateMotion>
-                  <g transform="translate(-10,-10)">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#4F8CFF" />
-                    </svg>
-                  </g>
-                </g>
-              </svg>
-            </motion.div>
+    {/* Small starting plane */}
+    <g transform="translate(12 68) rotate(50)">
+      <svg width="18" height="18" viewBox="0 0 24 24">
+        <path
+          fill="#4F8CFF"
+          d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0011.5 2A1.5 1.5 0 0010 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z"
+          opacity=".55"
+        />
+      </svg>
+    </g>
+
+    {/* Animated Plane */}
+    <g filter="url(#planeShadow)">
+      <animateMotion
+        dur="7s"
+        repeatCount="indefinite"
+        rotate="auto"
+        keyPoints="0;1"
+        keyTimes="0;1"
+      >
+        <mpath href="#flightPath" />
+      </animateMotion>
+
+      <g transform="translate(-13 -13) rotate(90 15 12)">
+        <svg width="30" height="35" viewBox="0 0 20 24">
+          <path
+            fill="#4F8CFF"
+            d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0011.5 2A1.5 1.5 0 0010 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z"
+          />
+        </svg>
+      </g>
+    </g>
+  </svg>
+</motion.div>
 
             {/* Badge */}
             <motion.div
