@@ -459,18 +459,34 @@ export default function VisaChecker() {
                     Thank you! We have received your details. Our team will contact you shortly.
                   </p>
                   {result && (
-                    <div className={`mt-5 p-4 rounded-xl text-sm text-left ${
-                      noVisaNeeded
-                        ? "bg-green-50 dark:bg-green-900/20 border border-green-200 text-green-800 dark:text-green-300"
-                        : "bg-amber-50 dark:bg-amber-900/20 border border-amber-200 text-amber-800 dark:text-amber-300"
-                    }`}>
-                      <p className="font-semibold mb-1">
-                        {result.status === "no_visa" && "No Visa Required"}
-                        {result.status === "visa_free" && "Visa-Free Travel"}
-                        {result.status === "visa_on_arrival" && "Visa on Arrival"}
-                        {result.status === "visa_required" && "Visa Required"}
-                      </p>
-                      <p className="leading-relaxed">{result.note}</p>
+                    <div className="space-y-4 mt-5 text-left">
+                      <div className={`p-4 rounded-xl text-sm ${
+                        noVisaNeeded
+                          ? "bg-green-50 dark:bg-green-900/20 border border-green-200 text-green-800 dark:text-green-300"
+                          : "bg-amber-50 dark:bg-amber-900/20 border border-amber-200 text-amber-800 dark:text-amber-300"
+                      }`}>
+                        <p className="font-semibold mb-1">
+                          {result.status === "no_visa" && "No Visa Required"}
+                          {result.status === "visa_free" && "Visa-Free Travel"}
+                          {result.status === "visa_on_arrival" && "Visa on Arrival"}
+                          {result.status === "visa_required" && "Visa Required"}
+                        </p>
+                        <p className="leading-relaxed">{result.note}</p>
+                      </div>
+
+                      {result.status === "visa_required" && (
+                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-5 shadow-sm">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="w-2 h-2 bg-[#FC990A] rounded-full animate-pulse" />
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                              Visa Expert Assigned
+                            </h4>
+                          </div>
+                          <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
+                            Since your travel requires a visa, a dedicated visa advisor from our travel desk has been assigned to your request. We will reach out to you shortly to guide you step-by-step through the documentation and filing process.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </motion.div>
@@ -505,7 +521,7 @@ export default function VisaChecker() {
                       <AlertTriangle className="w-7 h-7 text-amber-600 dark:text-amber-400" />
                     )}
                   </div>
-
+ 
                   {/* Title */}
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {result.status === "no_visa" && "No Visa Required"}
@@ -513,44 +529,26 @@ export default function VisaChecker() {
                     {result.status === "visa_on_arrival" && "Visa on Arrival"}
                     {result.status === "visa_required" && "Visa Required"}
                   </h3>
-
+ 
                   {/* Note */}
                   <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
                     {result.note}
                   </p>
-
-                  {/* Enquire Now button for visa_required */}
+ 
+                  {/* For visa required, tell the user we have received their details and an expert will call them */}
                   {needsVisa && (
-                    <motion.div variants={fadeUp}>
-                      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 rounded-xl p-4 mb-4">
-                        <p className="text-amber-800 dark:text-amber-300 text-sm leading-relaxed">
-                          A visa is required for your trip. Our visa specialists can assist you with the application process.
+                    <motion.div variants={fadeUp} className="mt-4 text-left">
+                      <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-5 shadow-sm">
+                        <div className="flex items-center gap-2.5 mb-2.5">
+                          <span className="w-2 h-2 bg-[#FC990A] rounded-full animate-pulse" />
+                          <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                            Expert Assistance Initiated
+                          </h4>
+                        </div>
+                        <p className="text-gray-600 dark:text-gray-300 text-xs leading-relaxed">
+                          We have safely registered your travel profile. One of our dedicated visa advisors will review your requirements and contact you shortly to coordinate your documentation and application process.
                         </p>
                       </div>
-                      <button
-                        onClick={handleEnquire}
-                        disabled={submitting}
-                        className="btn-primary w-full py-3.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                      >
-                        {submitting ? (
-                          <>Sending...</>
-                        ) : (
-                          <>Enquire Now <ArrowRight className="w-4 h-4" /></>
-                        )}
-                      </button>
-                    </motion.div>
-                  )}
-
-                  {/* For visa-free / visa-on-arrival */}
-                  {noVisaNeeded && (
-                    <motion.div variants={fadeUp}>
-                      <button
-                        onClick={handleEnquire}
-                        disabled={submitting}
-                        className="btn-secondary w-full mt-3 py-3 flex items-center justify-center gap-2 disabled:opacity-60"
-                      >
-                        {submitting ? "Sending..." : <>Have questions? Enquire via Email <ArrowRight className="w-4 h-4" /></>}
-                      </button>
                     </motion.div>
                   )}
                 </motion.div>
