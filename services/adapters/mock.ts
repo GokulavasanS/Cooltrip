@@ -28,6 +28,10 @@ function makeFlight(
     arrivalDate: overrides.arrivalDate ?? params.departureDate,
     cabin: params.cabin,
     seatsLeft: Math.floor(Math.random() * 8) + 1,
+    segments: [],
+    layovers: [],
+    baseFare: overrides.fare,
+    taxes: 0,
     ...overrides,
   };
 }
