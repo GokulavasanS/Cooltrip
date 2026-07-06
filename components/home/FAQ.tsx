@@ -41,7 +41,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <span className="font-semibold text-gray-900">{q}</span>
+        <span className="font-semibold text-gray-900 dark:text-white">{q}</span>
         <ChevronDown className={`w-5 h-5 text-[#4F8CFF] shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
       <AnimatePresence initial={false}>
@@ -52,7 +52,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">
+            <div className="px-6 pb-6 text-gray-500 dark:text-gray-400 text-sm leading-relaxed border-t border-gray-100 dark:border-white/10 pt-4">
               {a}
             </div>
           </motion.div>
@@ -64,7 +64,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-gray-950">
       <div className="max-w-3xl mx-auto px-6">
         <motion.div
           initial="hidden"
@@ -74,7 +74,7 @@ export default function FAQ() {
           className="text-center mb-12"
         >
           <motion.p variants={fadeUp} className="text-[#4F8CFF] font-semibold text-sm uppercase tracking-widest mb-3">FAQ</motion.p>
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900">Common questions.</motion.h2>
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Common questions.</motion.h2>
         </motion.div>
 
         <motion.div

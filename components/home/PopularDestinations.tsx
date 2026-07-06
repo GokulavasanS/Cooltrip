@@ -20,7 +20,7 @@ const destinations = [
 
 export default function PopularDestinations() {
   return (
-    <section id="destinations" className="py-24 bg-white">
+    <section id="destinations" className="py-24 bg-white dark:bg-gray-950">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -34,7 +34,7 @@ export default function PopularDestinations() {
             <motion.p variants={fadeUp} className="text-[#4F8CFF] font-semibold text-sm uppercase tracking-widest mb-3">
               Popular Destinations
             </motion.p>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
               Where will you go next?
             </motion.h2>
           </div>

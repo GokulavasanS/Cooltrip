@@ -27,7 +27,7 @@ export default function BookingTimeline() {
           <motion.p variants={fadeUp} className="text-[#4F8CFF] font-semibold text-sm uppercase tracking-widest mb-3">
             How It Works
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900">
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
             Book in 5 simple steps.
           </motion.h2>
         </motion.div>
@@ -56,7 +56,7 @@ export default function BookingTimeline() {
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs font-semibold text-[#4F8CFF] bg-[#4F8CFF]/10 px-2 py-0.5 rounded-full">Step {i + 1}</span>
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg">{step.title}</h3>
+                <h3 className="font-bold text-gray-900 dark:text-white text-lg">{step.title}</h3>
                 <p className="text-gray-500 text-sm mt-1">{step.desc}</p>
               </div>
             </motion.div>

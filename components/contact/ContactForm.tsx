@@ -28,7 +28,7 @@ export default function ContactForm() {
         <div className="success-icon w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
           <CheckCircle className="w-8 h-8 text-white" />
         </div>
-        <h3 className="font-bold text-gray-900 text-xl mb-2">Message Sent!</h3>
+        <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-2">Message Sent!</h3>
         <p className="text-gray-500 text-sm mb-6">We&apos;ll get back to you within 24 hours.</p>
         <button onClick={() => setSent(false)} className="btn-secondary text-sm px-6 py-2.5">
           Send Another
@@ -43,7 +43,7 @@ export default function ContactForm() {
         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#4F8CFF] to-[#62D4E3] flex items-center justify-center">
           <MessageSquare className="w-4 h-4 text-white" />
         </div>
-        <h2 className="font-bold text-gray-900 text-xl">Send us a message</h2>
+        <h2 className="font-bold text-gray-900 dark:text-white text-xl">Send us a message</h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

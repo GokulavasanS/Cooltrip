@@ -58,7 +58,7 @@ export default function WhyChooseUs() {
           <motion.p variants={fadeUp} className="text-[#4F8CFF] font-semibold text-sm uppercase tracking-widest mb-3">
             Why CoolTrips
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Travel smarter, not harder.
           </motion.h2>
           <motion.p variants={fadeUp} className="text-gray-500 text-lg max-w-xl mx-auto">
@@ -83,7 +83,7 @@ export default function WhyChooseUs() {
               <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform`}>
                 <f.icon className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">{f.title}</h3>
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{f.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}

@@ -41,7 +41,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-gray-950">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial="hidden"
@@ -53,7 +53,7 @@ export default function Testimonials() {
           <motion.p variants={fadeUp} className="text-[#4F8CFF] font-semibold text-sm uppercase tracking-widest mb-3">
             Testimonials
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900">
+          <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
             Loved by travelers across India.
           </motion.h2>
         </motion.div>
@@ -74,15 +74,15 @@ export default function Testimonials() {
                 ))}
               </div>
               {/* Text */}
-              <p className="text-gray-600 text-sm leading-relaxed flex-1">&quot;{t.text}&quot;</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed flex-1">&quot;{t.text}&quot;</p>
               {/* Author */}
-              <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+              <div className="flex items-center gap-3 pt-2 border-t border-gray-100 dark:border-white/10">
                 <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
                   {t.avatar}
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900 text-sm">{t.name}</div>
-                  <div className="text-gray-400 text-xs">{t.location}</div>
+                  <div className="font-semibold text-gray-900 dark:text-white text-sm">{t.name}</div>
+                  <div className="text-gray-400 dark:text-gray-500 text-xs">{t.location}</div>
                 </div>
               </div>
             </motion.div>

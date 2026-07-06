@@ -18,7 +18,7 @@ export default function EmptyState() {
         </div>
       </div>
 
-      <h3 className="font-bold text-gray-900 text-2xl mb-3 tracking-tight">
+      <h3 className="font-bold text-gray-900 dark:text-white text-2xl mb-3 tracking-tight">
         Sky is Clear (No Flights Found)
       </h3>
       
@@ -26,7 +26,7 @@ export default function EmptyState() {
         We checked the skies and couldn&apos;t find any cached flight prices for this exact route and date. Every seat seems to have taken wing on this schedule!
       </p>
 
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100 rounded-2xl text-xs text-gray-600 font-medium shadow-sm">
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl text-xs text-gray-600 dark:text-gray-400 font-medium shadow-sm">
         <Compass className="w-3.5 h-3.5 text-[#4F8CFF] shrink-0" />
         <span>Try adjusting filters, or explore different dates and nearby airports.</span>
       </div>

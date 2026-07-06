@@ -63,16 +63,16 @@ function PanelCard({
   const taxes = f.taxes ?? (f.fare - baseFare);
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+    <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-white/10 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-        <span className="font-bold text-gray-900 text-base">Your Selection</span>
+      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-white/10">
+        <span className="font-bold text-gray-900 dark:text-white text-base">Your Selection</span>
         <button
           onClick={onClose}
-          className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+          className="w-7 h-7 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 flex items-center justify-center transition-colors"
           aria-label="Clear selection"
         >
-          <X className="w-3.5 h-3.5 text-gray-500" />
+          <X className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
         </button>
       </div>
 
@@ -89,58 +89,58 @@ function PanelCard({
 
       <div className="p-5">
         {/* Airline row */}
-        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100 dark:border-white/10">
           <div className="w-9 h-9 rounded-xl bg-[#4F8CFF]/10 flex items-center justify-center shrink-0">
             <Plane className="w-4 h-4 text-[#4F8CFF]" />
           </div>
           <div>
-            <p className="font-semibold text-gray-900 text-sm">{f.airline}</p>
-            <p className="text-gray-400 text-xs">{f.flightNumber}</p>
+            <p className="font-semibold text-gray-900 dark:text-white text-sm">{f.airline}</p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs">{f.flightNumber}</p>
           </div>
           <div className="ml-auto text-right">
-            <p className="text-xs text-gray-400">{formatDate(f.departureDate)}</p>
-            <p className="text-xs text-gray-400">{f.cabin}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">{formatDate(f.departureDate)}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">{f.cabin}</p>
           </div>
         </div>
 
         {/* Route row */}
         <div className="flex items-center justify-between mb-5">
           <div>
-            <p className="font-bold text-gray-900 text-2xl leading-none">{f.departureTime}</p>
-            <p className="text-gray-400 text-xs mt-1">{f.originCode}</p>
+            <p className="font-bold text-gray-900 dark:text-white text-2xl leading-none">{f.departureTime}</p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">{f.originCode}</p>
           </div>
           <div className="text-center">
-            <div className="flex items-center gap-1 text-gray-400 text-xs justify-center">
+            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-500 text-xs justify-center">
               <Clock className="w-3 h-3" />
               {formatDuration(f.durationMinutes)}
             </div>
-            <div className="h-px w-16 bg-gray-200 my-1 mx-auto" />
-            <p className="text-gray-400 text-xs">{stopsLabel(f.stops)}</p>
+            <div className="h-px w-16 bg-gray-200 dark:bg-white/10 my-1 mx-auto" />
+            <p className="text-gray-400 dark:text-gray-500 text-xs">{stopsLabel(f.stops)}</p>
           </div>
           <div className="text-right">
-            <p className="font-bold text-gray-900 text-2xl leading-none">{f.arrivalTime}</p>
-            <p className="text-gray-400 text-xs mt-1">{f.destinationCode}</p>
+            <p className="font-bold text-gray-900 dark:text-white text-2xl leading-none">{f.arrivalTime}</p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">{f.destinationCode}</p>
           </div>
         </div>
 
         {/* Price summary */}
-        <div className="bg-gray-50 rounded-2xl p-4 mb-4">
-          <p className="font-semibold text-gray-900 text-sm mb-3">Price Summary</p>
+        <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-4 mb-4">
+          <p className="font-semibold text-gray-900 dark:text-white text-sm mb-3">Price Summary</p>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500">Base Fare</span>
-              <span className="font-medium text-gray-900">{formatINR(baseFare)}</span>
+              <span className="text-gray-500 dark:text-gray-400">Base Fare</span>
+              <span className="font-medium text-gray-900 dark:text-white">{formatINR(baseFare)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">Taxes &amp; Fees</span>
-              <span className="font-medium text-gray-900">{formatINR(taxes)}</span>
+              <span className="text-gray-500 dark:text-gray-400">Taxes &amp; Fees</span>
+              <span className="font-medium text-gray-900 dark:text-white">{formatINR(taxes)}</span>
             </div>
-            <div className="flex justify-between font-bold border-t border-gray-200 pt-2 mt-2">
-              <span className="text-gray-900">Total</span>
+            <div className="flex justify-between font-bold border-t border-gray-200 dark:border-white/10 pt-2 mt-2">
+              <span className="text-gray-900 dark:text-white">Total</span>
               <span className="text-[#4F8CFF] text-base">{formatINR(f.fare)}</span>
             </div>
           </div>
-          <p className="text-gray-400 text-xs text-right mt-1">per person</p>
+          <p className="text-gray-400 dark:text-gray-500 text-xs text-right mt-1">per person</p>
         </div>
 
         {/* CTA */}

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { AlertTriangle, PlaneTakeoff } from "lucide-react";
 import { useFlightStore } from "@/store/flightStore";
 import { SortOption } from "@/types/flight";
 import FlightCard from "./FlightCard";
@@ -14,7 +15,7 @@ import { filterFlights } from "@/utils/flight";
 import { staggerContainer } from "@/utils/animation";
 
 export default function FlightResults() {
-  const { results, isSearching, searchParams } = useFlightStore();
+  const { results, isSearching, searchParams, searchError } = useFlightStore();
   const [sort, setSort] = useState<SortOption>("cheapest");
   const [filters, setFilters] = useState({
     maxPrice: 999999,
@@ -43,6 +44,27 @@ export default function FlightResults() {
         <div className="flex-1">
           {isSearching ? (
             <LoadingSkeleton />
+          ) : searchError ? (
+            /* ── API error / no flights banner ───────────────────────── */
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center text-center py-16 px-6 bg-white dark:bg-gray-900 rounded-2xl border border-orange-100 dark:border-orange-900/50 shadow-sm"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center mb-5">
+                <AlertTriangle className="w-8 h-8 text-orange-400" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                Flights Not Available
+              </h3>
+              <p className="text-gray-500 text-sm max-w-md leading-relaxed">
+                {searchError}
+              </p>
+              <div className="mt-6 flex items-center gap-2 text-xs text-gray-400">
+                <PlaneTakeoff className="w-4 h-4" />
+                <span>Try adjusting your dates, route, or passenger count.</span>
+              </div>
+            </motion.div>
           ) : results.length === 0 ? (
             <EmptyState />
           ) : (

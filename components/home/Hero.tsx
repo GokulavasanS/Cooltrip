@@ -126,7 +126,7 @@ export default function Hero() {
             {/* Headline */}
             <motion.h1
               variants={fadeUp}
-              className="text-5xl md:text-6xl font-bold leading-[1.1] text-gray-900 mb-5"
+              className="text-5xl md:text-6xl font-bold leading-[1.1] text-gray-900 dark:text-white mb-5"
             >
               Your Journey
               <br />
@@ -160,7 +160,7 @@ export default function Hero() {
               {stats.map((s) => (
                 <div key={s.label} className="flex items-center gap-2">
                   <s.icon className="w-4 h-4 text-[#4F8CFF]" />
-                  <span className="font-bold text-gray-900 text-sm">{s.value}</span>
+                  <span className="font-bold text-gray-900 dark:text-white text-sm">{s.value}</span>
                   <span className="text-gray-400 text-sm">{s.label}</span>
                 </div>
               ))}
@@ -175,7 +175,7 @@ export default function Hero() {
                 {airlines.map((name) => (
                   <span
                     key={name}
-                    className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 shadow-sm"
+                    className="px-3 py-1.5 bg-white dark:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 shadow-sm"
                   >
                     {name}
                   </span>
@@ -220,7 +220,7 @@ export default function Hero() {
           className="mt-10 lg:hidden"
         >
           <HeroSearchForm />
-        </motion.div>
+        </motion.div> 
       </div>
     </section>
   );

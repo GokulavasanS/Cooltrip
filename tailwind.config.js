@@ -4,6 +4,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -11,7 +12,7 @@ module.exports = {
         cyan: "#62D4E3",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Satoshi", "sans-serif"],
       },
       borderRadius: {
         "2xl": "20px",

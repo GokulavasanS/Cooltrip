@@ -16,15 +16,15 @@ export default function FAQSnippet() {
 
   return (
     <div className="glass p-7">
-      <h3 className="font-bold text-gray-900 mb-5">Quick Answers</h3>
+      <h3 className="font-bold text-gray-900 dark:text-white mb-5">Quick Answers</h3>
       <div className="space-y-2">
         {faqs.map((f, i) => (
-          <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
+          <div key={i} className="border border-gray-100 dark:border-white/10 rounded-2xl overflow-hidden">
             <button
               className="w-full flex justify-between items-center p-4 text-left gap-3"
               onClick={() => setOpen(open === i ? null : i)}
             >
-              <span className="font-medium text-gray-900 text-sm">{f.q}</span>
+              <span className="font-medium text-gray-900 dark:text-white text-sm">{f.q}</span>
               <ChevronDown className={`w-4 h-4 text-[#4F8CFF] shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`} />
             </button>
             <AnimatePresence>
@@ -35,7 +35,7 @@ export default function FAQSnippet() {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <div className="px-4 pb-4 text-gray-500 text-sm leading-relaxed">{f.a}</div>
+                  <div className="px-4 pb-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{f.a}</div>
                 </motion.div>
               )}
             </AnimatePresence>

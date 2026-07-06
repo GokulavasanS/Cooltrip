@@ -7,16 +7,18 @@ import { Clock, X } from "lucide-react";
 
 export default function RecentSearches() {
   const { recentSearches, clearRecentSearches } = useRecentSearches();
-  const { setResults, setSearchParams, setIsSearching } = useFlightStore();
+  const { setResults, setSearchParams, setIsSearching, setSearchError } = useFlightStore();
 
   if (recentSearches.length === 0) return null;
 
   const replay = async (params: typeof recentSearches[0]) => {
     setIsSearching(true);
     setSearchParams(params);
+    setSearchError(null);
     try {
-      const results = await flightService.search(params);
-      setResults(results);
+      const { flights, error: apiError } = await flightService.search(params);
+      setResults(flights);
+      setSearchError(apiError);
     } finally {
       setIsSearching(false);
     }
@@ -31,7 +33,7 @@ export default function RecentSearches() {
         <button
           key={i}
           onClick={() => replay(s)}
-          className="inline-flex items-center gap-1.5 text-xs font-medium bg-white border border-gray-200 hover:border-[#4F8CFF]/40 hover:text-[#4F8CFF] text-gray-600 px-3 py-1.5 rounded-full transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-medium bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 hover:border-[#4F8CFF]/40 hover:text-[#4F8CFF] text-gray-600 dark:text-gray-300 px-3 py-1.5 rounded-full transition-all"
         >
           {s.originCode} → {s.destinationCode}
           <span className="text-gray-300">·</span>

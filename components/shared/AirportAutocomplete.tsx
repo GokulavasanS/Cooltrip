@@ -95,7 +95,7 @@ export default function AirportAutocomplete({ id, label, placeholder, value, onC
                 {airport.code}
               </span>
               <div>
-                <div className="font-medium text-gray-900 text-sm">{airport.city}</div>
+                <div className="font-medium text-gray-900 dark:text-white text-sm">{airport.city}</div>
                 <div className="text-gray-400 text-xs truncate max-w-[200px]">{airport.name}</div>
               </div>
               <div className="ml-auto text-gray-400 text-xs">{airport.country}</div>

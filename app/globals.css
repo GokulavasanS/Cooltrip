@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 /* ── Tailwind v4 theme config ── */
 @theme {
   --color-accent: #FC990A; /*font color accent : #4F8CFF*/
   --color-cyan: #62D4E3;
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Satoshi", sans-serif;
   --radius-2xl: 20px;
   --radius-3xl: 30px;
 }
+
+@custom-variant dark (&:is(.dark *));
 /* ── Design Tokens ── */
 :root {
   --accent: #4F8CFF;
@@ -61,7 +62,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -165,7 +166,7 @@ body {
 }
 
 .btn-secondary {
-  background: white;
+  background: var(--bg-white);
   color: #4F8CFF;
   border: 1.5px solid rgba(79,140,255,0.3);
   border-radius: var(--radius-btn);
@@ -276,13 +277,12 @@ body {
   border-radius: 12px;
   padding: 12px 16px;
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
   color: var(--text-primary);
 }
-
 
 .input-glass:focus {
   border-color: #4F8CFF;
@@ -292,6 +292,10 @@ body {
 .input-glass:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.input-glass::placeholder {
+  color: var(--text-muted);
 }
 
 .dark .input-glass::placeholder {

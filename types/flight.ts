@@ -1,8 +1,17 @@
 // Trip type
-export type TripType = "one-way" | "round-trip";
+export type TripType = "one-way" | "round-trip" | "multi-city";
 
 // Cabin class
 export type CabinClass = "Economy" | "Premium Economy" | "Business" | "First";
+
+// A single leg for multi-city trips
+export interface MultiCityLeg {
+  originCode: string;
+  origin: string;
+  destinationCode: string;
+  destination: string;
+  departureDate: string; // ISO date string
+}
 
 // Search parameters submitted by user
 export interface FlightSearchParams {
@@ -16,6 +25,7 @@ export interface FlightSearchParams {
   children: number;
   cabin: CabinClass;
   tripType: TripType;
+  multiCityLegs?: MultiCityLeg[];
 }
 
 // A single flight result

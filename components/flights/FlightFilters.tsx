@@ -49,12 +49,12 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
 
   return (
     <div className="glass p-5 space-y-6">
-      <h3 className="font-bold text-gray-900">Filters</h3>
+      <h3 className="font-bold text-gray-900 dark:text-white">Filters</h3>
 
       {/* Price */}
       <div>
         <div className="flex justify-between text-sm mb-2">
-          <span className="text-gray-500 font-medium">Max Price</span>
+          <span className="text-gray-500 dark:text-gray-400 font-medium">Max Price</span>
           <span className="font-bold text-[#4F8CFF]">₹{maxPrice.toLocaleString("en-IN")}</span>
         </div>
         <input
@@ -70,7 +70,7 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
 
       {/* Stops */}
       <div>
-        <p className="text-sm font-medium text-gray-500 mb-2">Stops</p>
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Stops</p>
         <div className="space-y-1.5">
           {[
             { label: "Any", value: null },
@@ -86,7 +86,9 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
                 onChange={() => apply({ stops: opt.value })}
                 className="accent-[#4F8CFF]"
               />
-              <span className="text-sm text-gray-700 group-hover:text-gray-900">{opt.label}</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">
+                {opt.label}
+              </span>
             </label>
           ))}
         </div>
@@ -95,7 +97,7 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
       {/* Airlines */}
       {presentAirlines.length > 0 && (
         <div>
-          <p className="text-sm font-medium text-gray-500 mb-2">Airlines</p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Airlines</p>
           <div className="space-y-1.5">
             {presentAirlines.map((name) => (
               <label key={name} className="flex items-center gap-2.5 cursor-pointer group">
@@ -105,7 +107,9 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
                   onChange={() => toggleAirline(name)}
                   className="accent-[#4F8CFF]"
                 />
-                <span className="text-sm text-gray-700 group-hover:text-gray-900">{name}</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">
+                  {name}
+                </span>
               </label>
             ))}
           </div>
@@ -120,7 +124,7 @@ export default function FlightFilters({ onFilterChange }: FlightFiltersProps) {
           onChange={(e) => apply({ refundable: e.target.checked })}
           className="accent-[#4F8CFF]"
         />
-        <span className="text-sm text-gray-700">Refundable only</span>
+        <span className="text-sm text-gray-700 dark:text-gray-300">Refundable only</span>
       </label>
 
       {/* Reset */}

@@ -8,12 +8,12 @@ const hours = [
 export default function BusinessHours() {
   return (
     <div className="glass p-6">
-      <h3 className="font-bold text-gray-900 mb-4">Business Hours</h3>
+      <h3 className="font-bold text-gray-900 dark:text-white mb-4">Business Hours</h3>
       <div className="space-y-2">
         {hours.map((h) => (
           <div key={h.day} className="flex justify-between text-sm">
-            <span className="text-gray-500">{h.day}</span>
-            <span className={`font-medium ${h.day === "WhatsApp Support" ? "text-green-600" : "text-gray-900"}`}>
+            <span className="text-gray-500 dark:text-gray-400">{h.day}</span>
+            <span className={`font-medium ${h.day === "WhatsApp Support" ? "text-green-600 dark:text-green-500" : "text-gray-900 dark:text-white"}`}>
               {h.time}
             </span>
           </div>
