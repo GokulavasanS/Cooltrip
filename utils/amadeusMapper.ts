@@ -62,6 +62,8 @@ export function mapAmadeusOffer(offer: any, dictionaries: any): Flight {
     durationMinutes: parseDuration(itinerary.duration),
     stops: segments.length - 1,
     stopCities: stopCities.length > 0 ? stopCities : undefined,
+    segments: [],
+    layovers: [],
     cabin: CABIN_MAP[cabinCode] ?? "Economy",
     fare,
     baseFare,
