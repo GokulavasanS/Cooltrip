@@ -22,7 +22,7 @@ const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_BOOKING 
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 export default function PassengerModal() {
-  const { selectedFlight, setSelectedFlight } = useFlightStore();
+  const { selectedFlights, clearSelection } = useFlightStore();
   const { isPassengerModalOpen, closePassengerModal } = useUIStore();
   const [submitted, setSubmitted] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -39,7 +39,7 @@ export default function PassengerModal() {
   });
 
   const onSubmit = async (data: PassengerSchema) => {
-    if (!selectedFlight) return;
+    if (!selectedFlights || selectedFlights.length === 0) return;
     setEmailError("");
 
     if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
@@ -48,7 +48,20 @@ export default function PassengerModal() {
     }
 
     try {
-      await submitPassengerRequest(data, selectedFlight);
+      await submitPassengerRequest(data, selectedFlights);
+
+      const grandTotalFare = selectedFlights.reduce((sum, f) => sum + f.fare, 0);
+
+      // Build a multi-line formatted string to support 1-N legs smoothly in EmailJS
+      const fullItineraryText = selectedFlights
+        .map((f, i) => 
+`Leg ${i + 1}: ${f.origin} (${f.originCode}) → ${f.destination} (${f.destinationCode})
+Date: ${formatDate(f.departureDate)}
+Departure: ${f.departureTime} | Arrival: ${f.arrivalTime}
+Airline: ${f.airline} (${f.flightNumber})
+Cabin: ${f.cabin}
+Leg Fare: ${formatINR(f.fare)}`)
+        .join("\n\n");
 
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -61,16 +74,10 @@ export default function PassengerModal() {
           passport_no: data.passportNo ?? "Not provided",
           passengers: data.passengers,
           special_requests: data.specialRequests ?? "None",
-          origin: `${selectedFlight.origin} (${selectedFlight.originCode})`,
-          destination: `${selectedFlight.destination} (${selectedFlight.destinationCode})`,
-          flight_route: `${selectedFlight.originCode} → ${selectedFlight.destinationCode}`,
-          flight_date: formatDate(selectedFlight.departureDate),
-          departure_time: selectedFlight.departureTime,
-          arrival_time: selectedFlight.arrivalTime,
-          airline: selectedFlight.airline,
-          flight_number: selectedFlight.flightNumber,
-          cabin: selectedFlight.cabin,
-          fare: formatINR(selectedFlight.fare),
+          
+          full_itinerary: fullItineraryText,
+          grand_total_fare: formatINR(grandTotalFare),
+          
           to_email: "Reservation@cooltrip.org",
         },
         EMAILJS_PUBLIC_KEY
@@ -85,11 +92,11 @@ export default function PassengerModal() {
 
   const handleClose = () => {
     closePassengerModal();
-    setSelectedFlight(null);
+    clearSelection();
     setTimeout(() => { reset(); setSubmitted(false); setEmailError(""); }, 400);
   };
 
-  if (!isPassengerModalOpen || !selectedFlight) return null;
+  if (!isPassengerModalOpen || selectedFlights.length === 0) return null;
 
   return (
     <AnimatePresence>
@@ -125,7 +132,7 @@ export default function PassengerModal() {
             ) : (
               <>
                 {/* Flight summary */}
-                <FlightSummary flight={selectedFlight} />
+                <FlightSummary flights={selectedFlights} />
 
                 {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
@@ -227,36 +234,44 @@ function Field({ label, error, children }: { label: string; error?: string; chil
   );
 }
 
-function FlightSummary({ flight }: { flight: Flight }) {
-  if (!flight) return null;
+function FlightSummary({ flights }: { flights: Flight[] }) {
+  if (!flights || flights.length === 0) return null;
   return (
-    <div className="bg-gradient-to-br from-[#4F8CFF]/8 to-[#62D4E3]/8 border border-[#4F8CFF]/15 rounded-2xl p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <Plane className="w-4 h-4 text-[#4F8CFF]" />
-        <span className="font-semibold text-gray-900 dark:text-white text-sm">Selected Flight</span>
-      </div>
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <div className="font-bold text-gray-900 dark:text-white text-2xl">{flight.departureTime}</div>
-          <div className="text-gray-500 text-sm">{flight.originCode} · {flight.origin}</div>
-        </div>
-        <div className="text-center">
-          <div className="text-gray-400 text-xs flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            {formatDuration(flight.durationMinutes)}
+    <div className="space-y-4">
+      {flights.map((flight, i) => (
+        <div key={i} className="bg-gradient-to-br from-[#4F8CFF]/8 to-[#62D4E3]/8 border border-[#4F8CFF]/15 rounded-2xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Plane className="w-4 h-4 text-[#4F8CFF]" />
+            <span className="font-semibold text-gray-900 dark:text-white text-sm">Flight {i + 1} of {flights.length}</span>
           </div>
-          <div className="text-xs text-gray-400">{stopsLabel(flight.stops)}</div>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <div className="font-bold text-gray-900 dark:text-white text-2xl">{flight.departureTime}</div>
+              <div className="text-gray-500 text-sm">{flight.originCode} · {flight.origin}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-gray-400 text-xs flex items-center gap-1">
+                <Clock className="w-3 h-3" />
+                {formatDuration(flight.durationMinutes)}
+              </div>
+              <div className="text-xs text-gray-400">{stopsLabel(flight.stops)}</div>
+            </div>
+            <div className="text-right">
+              <div className="font-bold text-gray-900 dark:text-white text-2xl">{flight.arrivalTime}</div>
+              <div className="text-gray-500 text-sm">{flight.destinationCode} · {flight.destination}</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3 text-xs text-gray-500 border-t border-gray-100 pt-3">
+            <span>{flight.airline} · {flight.flightNumber}</span>
+            <span>{flight.cabin}</span>
+            <span>{formatDate(flight.departureDate)}</span>
+            <span className="ml-auto font-bold text-[#4F8CFF] text-base">{formatINR(flight.fare)}</span>
+          </div>
         </div>
-        <div className="text-right">
-          <div className="font-bold text-gray-900 dark:text-white text-2xl">{flight.arrivalTime}</div>
-          <div className="text-gray-500 text-sm">{flight.destinationCode} · {flight.destination}</div>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-3 text-xs text-gray-500 border-t border-gray-100 pt-3">
-        <span>{flight.airline} · {flight.flightNumber}</span>
-        <span>{flight.cabin}</span>
-        <span>{formatDate(flight.departureDate)}</span>
-        <span className="ml-auto font-bold text-[#4F8CFF] text-base">{formatINR(flight.fare)}<span className="text-xs font-normal text-gray-400">/person</span></span>
+      ))}
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 flex justify-between items-center font-bold text-gray-900 dark:text-white">
+        <span>Grand Total</span>
+        <span className="text-xl text-[#4F8CFF]">{formatINR(flights.reduce((s, f) => s + f.fare, 0))}</span>
       </div>
     </div>
   );

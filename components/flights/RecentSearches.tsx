@@ -13,10 +13,42 @@ export default function RecentSearches() {
 
   const replay = async (params: typeof recentSearches[0]) => {
     setIsSearching(true);
-    setSearchParams(params);
     setSearchError(null);
+
+    let generatedLegs: import("@/types/flight").FlightSearchParams[] = [];
+    if (params.tripType === "one-way") {
+      generatedLegs = [{ ...params, tripType: "one-way", returnDate: undefined }];
+    } else if (params.tripType === "round-trip") {
+      generatedLegs = [
+        { ...params, tripType: "one-way", returnDate: undefined },
+        {
+          ...params,
+          origin: params.destination,
+          originCode: params.destinationCode,
+          destination: params.origin,
+          destinationCode: params.originCode,
+          departureDate: params.returnDate!,
+          tripType: "one-way",
+          returnDate: undefined,
+        },
+      ];
+    } else if (params.tripType === "multi-city" && params.multiCityLegs) {
+      generatedLegs = params.multiCityLegs.map((leg) => ({
+        ...params,
+        origin: leg.origin,
+        originCode: leg.originCode,
+        destination: leg.destination,
+        destinationCode: leg.destinationCode,
+        departureDate: leg.departureDate,
+        tripType: "one-way",
+        returnDate: undefined,
+        multiCityLegs: undefined,
+      }));
+    }
+
+    setSearchParams(params, generatedLegs);
     try {
-      const { flights, error: apiError } = await flightService.search(params);
+      const { flights, error: apiError } = await flightService.search(generatedLegs[0]);
       setResults(flights);
       setSearchError(apiError);
     } finally {

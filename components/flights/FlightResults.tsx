@@ -12,10 +12,11 @@ import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
 import EmptyState from "@/components/shared/EmptyState";
 import { sortFlights } from "@/utils/price";
 import { filterFlights } from "@/utils/flight";
+import { formatDateShort } from "@/utils/date";
 import { staggerContainer } from "@/utils/animation";
 
 export default function FlightResults() {
-  const { results, isSearching, searchParams, searchError } = useFlightStore();
+  const { results, isSearching, searchParams, searchError, searchLegs, currentLegIndex } = useFlightStore();
   const [sort, setSort] = useState<SortOption>("cheapest");
   const [filters, setFilters] = useState({
     maxPrice: 999999,
@@ -69,6 +70,16 @@ export default function FlightResults() {
             <EmptyState />
           ) : (
             <>
+              {searchLegs && searchLegs.length > 1 && currentLegIndex < searchLegs.length && (
+                <div className="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                  <h2 className="text-lg font-bold text-[#4F8CFF]">
+                    Step {currentLegIndex + 1} of {searchLegs.length}: Select Flight ({searchLegs[currentLegIndex].originCode} → {searchLegs[currentLegIndex].destinationCode})
+                  </h2>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {formatDateShort(searchLegs[currentLegIndex].departureDate)}
+                  </p>
+                </div>
+              )}
               <FlightSortBar value={sort} onChange={setSort} count={displayed.length} />
               {displayed.length === 0 ? (
                 <EmptyState />

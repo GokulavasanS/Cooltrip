@@ -29,6 +29,25 @@ export interface FlightSearchParams {
 }
 
 // A single flight result
+export interface FlightSegment {
+  origin: string;
+  originCode: string;
+  destination: string;
+  destinationCode: string;
+  departureTime: string;
+  arrivalTime: string;
+  airline: string;
+  airlineLogo?: string;
+  flightNumber: string;
+  durationMinutes: number;
+  cabin: string;
+}
+
+export interface Layover {
+  name: string;
+  durationMinutes: number;
+}
+
 export interface Flight {
   id: string;
   airline: string;
@@ -45,6 +64,8 @@ export interface Flight {
   durationMinutes: number;
   stops: number;
   stopCities?: string[];
+  segments: FlightSegment[];
+  layovers?: Layover[];
   cabin: CabinClass;
   fare: number;     // INR total
   baseFare?: number; // INR base (before taxes)
