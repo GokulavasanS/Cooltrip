@@ -124,6 +124,8 @@ export async function travelpayoutsSearchFlights(params: FlightSearchParams): Pr
       durationMinutes: item.duration_to,
       stops: item.transfers,
       stopCities: [],
+      segments: [],
+      layovers: [],
       cabin: params.cabin,
       fare: item.price,
       baseFare: Math.round(item.price * 0.85),
