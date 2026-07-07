@@ -9,13 +9,62 @@ import { ROUTES } from "@/constants/routes";
 import { formatINR } from "@/utils/currency";
 
 const destinations = [
-  { name: "Dubai", country: "UAE", code: "DXB", img: "/dest-dubai.png", from: 18500, tag: "Most Popular" },
-  { name: "Singapore", country: "Singapore", code: "SIN", img: "/dest-singapore.png", from: 14200, tag: "Best Value" },
-  { name: "Bali", country: "Indonesia", code: "DPS", img: "/dest-bali.png", from: 12800, tag: "Trending" },
-  { name: "London", country: "United Kingdom", code: "LHR", img: "/dest-london.png", from: 42000, tag: "Europe" },
-  { name: "Paris", country: "France", code: "CDG", img: "/dest-paris.png", from: 38500, tag: "Romance" },
-  { name: "Tokyo", country: "Japan", code: "NRT", img: "/dest-tokyo.png", from: 36000, tag: "Asia" },
-  { name: "Maldives", country: "Maldives", code: "MLE", img: "/dest-maldives.png", from: 9800, tag: "Beach" },
+  {
+    name: "Dubai",
+    country: "UAE",
+    code: "DXB",
+    img: "/dest-dubai.png",
+    from: 24999,
+    tag: "Most Popular",
+  },
+  {
+    name: "Singapore",
+    country: "Singapore",
+    code: "SIN",
+    img: "/dest-singapore.png",
+    from: 29999,
+    tag: "Best Value",
+  },
+  {
+    name: "Bali",
+    country: "Indonesia",
+    code: "DPS",
+    img: "/dest-bali.png",
+    from: 33999,
+    tag: "Trending",
+  },
+  {
+    name: "London",
+    country: "United Kingdom",
+    code: "LHR",
+    img: "/dest-london.png",
+    from: 59999,
+    tag: "Europe",
+  },
+  {
+    name: "Paris",
+    country: "France",
+    code: "CDG",
+    img: "/dest-paris.png",
+    from: 57999,
+    tag: "Romance",
+  },
+  {
+    name: "Tokyo",
+    country: "Japan",
+    code: "NRT",
+    img: "/dest-tokyo.png",
+    from: 49999,
+    tag: "Asia",
+  },
+  {
+    name: "Maldives",
+    country: "Maldives",
+    code: "MLE",
+    img: "/dest-maldives.png",
+    from: 19999,
+    tag: "Beach",
+  },
 ];
 
 export default function PopularDestinations() {
