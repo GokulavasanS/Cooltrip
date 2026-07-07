@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+// @ts-ignore
 import airportData from "airport-data";
 import { Airport } from "@/types/airport";
 import { AIRPORTS } from "@/constants/airports";
